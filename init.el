@@ -11,6 +11,7 @@
 (setq create-lockfiles nil)
 ;; Change the location of the saves
 (setq backup-directory-alist `(("." . "~/.saves")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -19,10 +20,16 @@
  '(custom-safe-themes
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
  '(epg-pinentry-mode 'loopback)
+ '(indent-tabs-mode nil)
+ '(lsp-eldoc-render-all t)
  '(lsp-go-use-gofumpt t)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree)))
+   '(lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree))
+ '(split-height-threshold 200)
+ '(tab-width 4)
+ '(undo-tree-history-directory-alist '(("." . "~/.undo-tree")))
+ '(vc-follow-symlinks t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -30,19 +37,34 @@
  ;; If there is more than one, they won't work right.
  )
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; all the interfacing stuff that has nothing to do with programming languages
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; zenburn
 (load-theme 'zenburn t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; global auto revert
 (global-auto-revert-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ido
 (require 'ido)
 (ido-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; undo-tree
 (require 'undo-tree)
 (global-undo-tree-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window
+(require 'ace-window)
 (global-set-key (kbd "M-o") 'ace-window)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; setting up languages
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lsp
@@ -54,8 +76,7 @@
   ;; remap the keys
   (setq lsp-keymap-prefix "C-c l")
   :config
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")  
-  ;;
+  (lsp-treemacs-sync-mode 1)
   ;; (lsp-rust-analyzer-cargo-watch-command "clippy") 
   ;; (lsp-rust-analyzer-server-display-inlay-hints t)  
   :hook (;; c
@@ -66,6 +87,12 @@
          (go-mode . lsp)
          ;; lsp
          (lsp-mode . lsp-enable-which-key-integration)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eldoc
+(use-package 
+  eldoc 
+  :config (global-eldoc-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company
@@ -106,3 +133,19 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t) 
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; move-lang
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(load "move-mode")
+(add-to-list 'auto-mode-alist '("\\.move\\'" . move-mode))
+(with-eval-after-load 'lsp-mode
+   (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
+   (lsp-register-client
+    (make-lsp-client
+     :new-connection (lsp-stdio-connection "move-analyzer")
+     :activation-fn (lsp-activate-on "move")
+     :priority -1
+     :server-id 'move-analyzer)))
+(add-hook 'move-mode-hook 'lsp)
+;;; init.el ends here
