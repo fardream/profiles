@@ -21,11 +21,11 @@
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
  '(epg-pinentry-mode 'loopback)
  '(indent-tabs-mode nil)
- '(lsp-eldoc-render-all t)
- '(lsp-go-use-gofumpt t)
+ '(lsp-file-watch-ignored-directories
+   '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.yarn\\'" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.venv\\'" "[/\\\\]\\.mypy_cache\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "bazel-[^/\\\\]+\\'" "[/\\\\]\\.meta\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]\\checkouts\\'" "[/\\\\]\\.gradle\\'" "[/\\\\]\\.m2\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.elixir_ls\\'" "[/\\\\]\\.direnv\\'" "[/\\\\]build\\'"))
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(solidity-flycheck solidity-mode yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(undo-tree-history-directory-alist '(("." . "~/.undo-tree")))
@@ -77,8 +77,12 @@
   (setq lsp-keymap-prefix "C-c l")
   :config
   (lsp-treemacs-sync-mode 1)
+  (setq lsp-eldoc-render-all t)  
   ;; (lsp-rust-analyzer-cargo-watch-command "clippy") 
-  ;; (lsp-rust-analyzer-server-display-inlay-hints t)  
+  ;; (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-register-custom-settings
+   '(("gopls.completeUnimported" t t)
+     ("gopls.staticcheck" t t)))  
   :hook (;; c
          (c-mode . lsp)
          ;; c++
@@ -103,6 +107,12 @@
   (setq company-idle-delay 0.0 company-minimum-prefix-length 1 lsp-idle-delay 0.1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; yasnippet
+(use-package 
+  yasnippet 
+  :config (yas-global-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
 (use-package 
   flycheck 
@@ -116,8 +126,6 @@
   :config
   ;; helm
   (use-package 
-    helm-config) 
-  (use-package 
     helm-xref)
   ;; global key map
   (define-key global-map [remap find-file] #'helm-find-files) 
@@ -125,14 +133,26 @@
   (define-key global-map [remap switch-to-buffer] #'helm-mini))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Go
-(require 'go-mode)
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+;; clang-format
+(require 'clang-format)
+(defun my-format-before-save () 
+  (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
+(add-hook 'c++-mode-hook  'my-format-before-save)
+(add-hook 'c-mode-hook  'my-format-before-save)
 
-(defun lsp-go-install-save-hooks () 
-  (add-hook 'before-save-hook #'lsp-format-buffer t t) 
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Go
+(use-package
+  go-mode
+  :config
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (setq lsp-go-use-gofumpt t)
+  :init
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; move-lang
@@ -148,4 +168,12 @@
      :priority -1
      :server-id 'move-analyzer)))
 (add-hook 'move-mode-hook 'lsp)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; protobuf
+(require 'protobuf-mode)
+(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
+(add-hook 'protobuf-mode-hook  'my-format-before-save)
+
 ;;; init.el ends here
