@@ -17,19 +17,20 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(bazel-buildifier-before-save t)
  '(custom-safe-themes
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
- '(epg-pinentry-mode 'loopback)
  '(indent-tabs-mode nil)
  '(lsp-file-watch-ignored-directories
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.yarn\\'" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.venv\\'" "[/\\\\]\\.mypy_cache\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "bazel-[^/\\\\]+\\'" "[/\\\\]\\.meta\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]\\checkouts\\'" "[/\\\\]\\.gradle\\'" "[/\\\\]\\.m2\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.elixir_ls\\'" "[/\\\\]\\.direnv\\'" "[/\\\\]build\\'"))
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(solidity-flycheck solidity-mode yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package magit helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(undo-tree-history-directory-alist '(("." . "~/.undo-tree")))
- '(vc-follow-symlinks t))
+ '(vc-follow-symlinks t)
+ '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -39,6 +40,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; all the interfacing stuff that has nothing to do with programming languages
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GPG
+(require 'epg)
+(setq epg-pinentry-mode 'loopback)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
@@ -76,7 +82,7 @@
   ;; remap the keys
   (setq lsp-keymap-prefix "C-c l")
   :config
-  (lsp-treemacs-sync-mode 1)
+  ;; (lsp-treemacs-sync-mode 1)
   (setq lsp-eldoc-render-all t)  
   ;; (lsp-rust-analyzer-cargo-watch-command "clippy") 
   ;; (lsp-rust-analyzer-server-display-inlay-hints t)
@@ -156,18 +162,18 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; move-lang
-(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-(load "move-mode")
-(add-to-list 'auto-mode-alist '("\\.move\\'" . move-mode))
-(with-eval-after-load 'lsp-mode
-   (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
-   (lsp-register-client
-    (make-lsp-client
-     :new-connection (lsp-stdio-connection "move-analyzer")
-     :activation-fn (lsp-activate-on "move")
-     :priority -1
-     :server-id 'move-analyzer)))
-(add-hook 'move-mode-hook 'lsp)
+;; (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+;; (load "move-mode")
+;; (add-to-list 'auto-mode-alist '("\\.move\\'" . move-mode))
+;; (with-eval-after-load 'lsp-mode
+;;    (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
+;;    (lsp-register-client
+;;     (make-lsp-client
+;;      :new-connection (lsp-stdio-connection "move-analyzer")
+;;      :activation-fn (lsp-activate-on "move")
+;;      :priority -1
+;;      :server-id 'move-analyzer)))
+;; (add-hook 'move-mode-hook 'lsp)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -175,5 +181,17 @@
 (require 'protobuf-mode)
 (add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
 (add-hook 'protobuf-mode-hook  'my-format-before-save)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bazel
+(use-package 
+  bazel 
+  :config (add-to-list 'auto-mode-alist '("\\BUILD\\'" . bazel-build-mode)) 
+  (add-to-list 'auto-mode-alist '("\\BUILD.bazel\\'" . bazel-build-mode)) 
+  (add-to-list 'auto-mode-alist '("\\WORKSPACE\\'" . bazel-workspace-mode)) 
+  (add-to-list 'auto-mode-alist '("\\WORKSPACE.bazel\\'" . bazel-workspace-mode)) 
+  (add-to-list 'auto-mode-alist '("\\.bzl\\'" . bazel-starlark-mode)) 
+  (add-to-list 'auto-mode-alist '("\\.bazelrc\\'" . bazelrc-mode)) 
+  (add-to-list 'auto-mode-alist '("\\.bazelignore\\'" . bazelignore-mode)))
 
 ;;; init.el ends here
