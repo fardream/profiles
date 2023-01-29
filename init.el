@@ -46,6 +46,9 @@
 (require 'epg)
 (setq epg-pinentry-mode 'loopback)
 
+(require 'pinentry)
+(pinentry-start)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
 (load-theme 'zenburn t)
