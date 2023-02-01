@@ -1,11 +1,23 @@
 # Setup Centos Stream 9
 
+## Some common stuff
+
 ```shell
 sudo dnf install epel-release
 sudo dnf upgrade
 sudo dnf install tmux git snapd
 sudo systemctl enable --now snapd.socket
 sudo ln -s /var/lib/snapd/snap /snap
+sudo snap install emacs --classic
+sudo dnf install gcc-toolset-12 # check of latest gcc toolset version on https://pkgs.org/search/?q=gcc
+sudo dnf install clang clang-tools-extra llvm
+```
+
+## Golang
+
+Install g
+```shell
+curl -sSL https://git.io/g-install | sh -s
 ```
 
 ```shell
