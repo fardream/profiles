@@ -1,0 +1,17 @@
+[user]
+	name = Chao Xu
+	email = fardream@users.noreply.github.com
+	signkey = 383419E029614AA8
+[commit]
+	gpgsign = true
+[github]
+	user = fardream
+[pull]
+	ff = only
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[init]
+	defaultBranch = main

@@ -1,8 +1,8 @@
 (require 'package)
 
 ;; Add necessary
-(setq package-archives (list '("melpa" . "https://melpa.org/packages/") 
-                             '("gnu" . "https://elpa.gnu.org/packages/") 
+(setq package-archives (list '("melpa" . "https://melpa.org/packages/")
+                             '("gnu" . "https://elpa.gnu.org/packages/")
                              '("org" . "https://orgmode.org/elpa/")))
 
 (package-initialize)
@@ -44,11 +44,13 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GPG
-(require 'epg)
-(setq epg-pinentry-mode 'loopback)
+;; don't do this on mac
+(unless (eq system-type 'darwin)
+  (require 'epg)
+  (setq epg-pinentry-mode 'loopback)
+  (require 'pinentry)
+  (pinentry-start))
 
-(require 'pinentry)
-(pinentry-start)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
@@ -78,19 +80,19 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lsp
-(use-package 
-  lsp 
+(use-package
+  lsp
   :init
   ;; disable the headerline
   (setq lsp-headerline-breadcrumb-enable nil)
   ;; remap the keys
   (setq lsp-keymap-prefix "C-c l")
   :config
-  ;; (lsp-rust-analyzer-cargo-watch-command "clippy") 
+  ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
   ;; (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-register-custom-settings
    '(("gopls.completeUnimported" t t)
-     ("gopls.staticcheck" t t)))  
+     ("gopls.staticcheck" t t)))
   :hook (;; c
          (c-mode . lsp)
          ;; c++
@@ -102,48 +104,48 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eldoc
-(use-package 
-  eldoc 
+(use-package
+  eldoc
   :config (global-eldoc-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; company
-(use-package 
-  company 
-  :init (global-set-key (kbd "C-c c") 'company-complete-common) 
-  :config (add-hook 'after-init-hook 'global-company-mode) 
+(use-package
+  company
+  :init (global-set-key (kbd "C-c c") 'company-complete-common)
+  :config (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0.0 company-minimum-prefix-length 1 lsp-idle-delay 0.1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yasnippet
-(use-package 
-  yasnippet 
+(use-package
+  yasnippet
   :config (yas-global-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; flycheck
-(use-package 
-  flycheck 
-  :ensure t 
+(use-package
+  flycheck
+  :ensure t
   :init (global-flycheck-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; helm
-(use-package 
-  helm 
+(use-package
+  helm
   :config
   ;; helm
-  (use-package 
+  (use-package
     helm-xref)
   ;; global key map
-  (define-key global-map [remap find-file] #'helm-find-files) 
-  (define-key global-map [remap execute-extended-command] #'helm-M-x) 
+  (define-key global-map [remap find-file] #'helm-find-files)
+  (define-key global-map [remap execute-extended-command] #'helm-M-x)
   (define-key global-map [remap switch-to-buffer] #'helm-mini))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; clang-format
 (require 'clang-format)
-(defun my-format-before-save () 
+(defun my-format-before-save ()
   (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
 (add-hook 'c++-mode-hook  'my-format-before-save)
 (add-hook 'c-mode-hook  'my-format-before-save)
@@ -186,14 +188,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bazel
-(use-package 
-  bazel 
-  :config (add-to-list 'auto-mode-alist '("\\BUILD\\'" . bazel-build-mode)) 
-  (add-to-list 'auto-mode-alist '("\\BUILD.bazel\\'" . bazel-build-mode)) 
-  (add-to-list 'auto-mode-alist '("\\WORKSPACE\\'" . bazel-workspace-mode)) 
-  (add-to-list 'auto-mode-alist '("\\WORKSPACE.bazel\\'" . bazel-workspace-mode)) 
-  (add-to-list 'auto-mode-alist '("\\.bzl\\'" . bazel-starlark-mode)) 
-  (add-to-list 'auto-mode-alist '("\\.bazelrc\\'" . bazelrc-mode)) 
+(use-package
+  bazel
+  :config (add-to-list 'auto-mode-alist '("\\BUILD\\'" . bazel-build-mode))
+  (add-to-list 'auto-mode-alist '("\\BUILD.bazel\\'" . bazel-build-mode))
+  (add-to-list 'auto-mode-alist '("\\WORKSPACE\\'" . bazel-workspace-mode))
+  (add-to-list 'auto-mode-alist '("\\WORKSPACE.bazel\\'" . bazel-workspace-mode))
+  (add-to-list 'auto-mode-alist '("\\.bzl\\'" . bazel-starlark-mode))
+  (add-to-list 'auto-mode-alist '("\\.bazelrc\\'" . bazelrc-mode))
   (add-to-list 'auto-mode-alist '("\\.bazelignore\\'" . bazelignore-mode)))
 
 ;;; init.el ends here
