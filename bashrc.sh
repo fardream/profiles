@@ -39,6 +39,10 @@ source /opt/rh/gcc-toolset-12/enable
 alias e="emacs"
 export EDITOR=emacs
 
+function man() {
+	emacs -nw --eval "(progn (man \"$1\") (delete-window))"
+}
+
 alias bazel=bazelisk
 
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
@@ -70,6 +74,6 @@ export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$P
 export GOBIN=${HOME}/gobin
 export PATH=${HOME}/gobin${PATH:+":${PATH}"}
 
-function man() {
-	emacs -nw --eval "(progn (man \"$1\") (delete-window))"
-}
+source "$HOME/.cargo/env"
+
+export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
