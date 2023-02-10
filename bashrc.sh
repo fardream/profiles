@@ -34,7 +34,9 @@ export PS1="$yellow[$CYAN\u$yellow@$red\H$yellow $GREEN\W$grey$yellow]$NC\$ "
 
 export GPG_TTY=$(tty)
 
-source /opt/rh/gcc-toolset-12/enable
+if [ -f /opt/rh/gcc-toolset-12/enable ]; then
+    source /opt/rh/gcc-toolset-12/enable
+fi
 
 alias e="emacs"
 export EDITOR=emacs
