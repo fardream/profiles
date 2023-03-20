@@ -26,7 +26,7 @@
    '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.yarn\\'" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.venv\\'" "[/\\\\]\\.mypy_cache\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "bazel-[^/\\\\]+\\'" "[/\\\\]\\.meta\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]\\checkouts\\'" "[/\\\\]\\.gradle\\'" "[/\\\\]\\.m2\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.elixir_ls\\'" "[/\\\\]\\.direnv\\'" "[/\\\\]build\\'"))
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(auctex magit markdown-mode js2-mode prettier-js web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(undo-tree-history-directory-alist '(("." . "~/.undo-tree")))
@@ -151,6 +151,12 @@
 (add-hook 'c-mode-hook  'my-format-before-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; markdown-mode
+(use-package apheleia
+  :hook ((markdown-mode . apheleia-mode))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go
 (use-package
   go-mode
@@ -237,12 +243,6 @@
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
 
-
-(require 'prettier-js)
-(add-hook 'js2-mode-hook 'prettier-js-mode)
-(add-hook 'web-mode-hook 'prettier-js-mode)
-(add-hook 'typescript-mode-hook 'prettier-js-mode)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTex
 (require 'tex-site)
@@ -253,4 +253,6 @@
 (add-to-list 'auto-mode-alist '("\\.ltx\\'" . LaTeX-mode))
 (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
 (add-hook 'LaTex-mode-hook 'flyspell-mode)
+
 ;;; init.el ends here
+
