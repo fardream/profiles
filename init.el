@@ -21,15 +21,11 @@
  '(custom-safe-themes
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
  '(indent-tabs-mode nil)
- '(lsp-eldoc-render-all t)
- '(lsp-file-watch-ignored-directories
-   '("[/\\\\]\\.git\\'" "[/\\\\]\\.github\\'" "[/\\\\]\\.circleci\\'" "[/\\\\]\\.hg\\'" "[/\\\\]\\.bzr\\'" "[/\\\\]_darcs\\'" "[/\\\\]\\.svn\\'" "[/\\\\]_FOSSIL_\\'" "[/\\\\]\\.idea\\'" "[/\\\\]\\.ensime_cache\\'" "[/\\\\]\\.eunit\\'" "[/\\\\]node_modules" "[/\\\\]\\.yarn\\'" "[/\\\\]\\.fslckout\\'" "[/\\\\]\\.tox\\'" "[/\\\\]dist\\'" "[/\\\\]dist-newstyle\\'" "[/\\\\]\\.stack-work\\'" "[/\\\\]\\.bloop\\'" "[/\\\\]\\.metals\\'" "[/\\\\]target\\'" "[/\\\\]\\.ccls-cache\\'" "[/\\\\]\\.vscode\\'" "[/\\\\]\\.venv\\'" "[/\\\\]\\.mypy_cache\\'" "[/\\\\]\\.deps\\'" "[/\\\\]build-aux\\'" "[/\\\\]autom4te.cache\\'" "[/\\\\]\\.reference\\'" "bazel-[^/\\\\]+\\'" "[/\\\\]\\.meta\\'" "[/\\\\]\\.lsp\\'" "[/\\\\]\\.clj-kondo\\'" "[/\\\\]\\.shadow-cljs\\'" "[/\\\\]\\.babel_cache\\'" "[/\\\\]\\.cpcache\\'" "[/\\\\]\\checkouts\\'" "[/\\\\]\\.gradle\\'" "[/\\\\]\\.m2\\'" "[/\\\\]bin/Debug\\'" "[/\\\\]obj\\'" "[/\\\\]_opam\\'" "[/\\\\]_build\\'" "[/\\\\]\\.elixir_ls\\'" "[/\\\\]\\.direnv\\'" "[/\\\\]build\\'"))
  '(menu-bar-mode nil)
  '(package-selected-packages
    '(apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
- '(undo-tree-history-directory-alist '(("." . "~/.undo-tree")))
  '(vc-follow-symlinks t)
  '(warning-suppress-types '((comp))))
 (custom-set-faces
@@ -43,18 +39,28 @@
 ;; all the interfacing stuff that has nothing to do with programming languages
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; magit
+(use-package magit
+  :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GPG
 ;; don't do this on mac
 (unless (eq system-type 'darwin)
   (require 'epg)
   (setq epg-pinentry-mode 'loopback)
-  (require 'pinentry)
-  (pinentry-start))
+  (use-package pinentry
+    :ensure t
+    :config
+    (pinentry-start)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
-(load-theme 'zenburn t)
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; global auto revert
@@ -67,29 +73,38 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; undo-tree
-(require 'undo-tree)
-(global-undo-tree-mode)
+(use-package undo-tree
+  :ensure t
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.saves")))
+  (global-undo-tree-mode))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window
-(require 'ace-window)
-(global-set-key (kbd "M-o") 'ace-window)
+(use-package ace-window
+  :ensure t
+  :config
+  (global-set-key (kbd "M-o") 'ace-window))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; setting up languages
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lsp
-(use-package
-  lsp
+(use-package lsp-mode
+  :ensure t
   :init
   ;; disable the headerline
   (setq lsp-headerline-breadcrumb-enable nil)
   ;; remap the keys
   (setq lsp-keymap-prefix "C-c l")
+  ;; eldoc render all
+  (setq lsp-eldoc-render-all t)
   :config
   ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
   ;; (lsp-rust-analyzer-server-display-inlay-hints t)
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
   (lsp-register-custom-settings
    '(("gopls.completeUnimported" t t)
      ("gopls.staticcheck" t t)))
@@ -103,6 +118,13 @@
          (lsp-mode . lsp-enable-which-key-integration)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; whichkey
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eldoc
 (use-package
   eldoc
@@ -112,14 +134,17 @@
 ;; company
 (use-package
   company
+  :ensure t
   :init (global-set-key (kbd "C-c c") 'company-complete-common)
-  :config (add-hook 'after-init-hook 'global-company-mode)
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
   (setq company-idle-delay 0.0 company-minimum-prefix-length 1 lsp-idle-delay 0.1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; yasnippet
 (use-package
   yasnippet
+  :ensure t
   :config (yas-global-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -133,33 +158,44 @@
 ;; helm
 (use-package
   helm
+  :ensure t
   :config
   ;; helm
-  (use-package
-    helm-xref)
   ;; global key map
   (define-key global-map [remap find-file] #'helm-find-files)
   (define-key global-map [remap execute-extended-command] #'helm-M-x)
   (define-key global-map [remap switch-to-buffer] #'helm-mini))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; clang-format
-(require 'clang-format)
-(defun my-format-before-save ()
-  (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
-(add-hook 'c++-mode-hook  'my-format-before-save)
-(add-hook 'c-mode-hook  'my-format-before-save)
+(use-package helm-xref
+  :after (helm)
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; markdown-mode
-(use-package apheleia
-  :hook ((markdown-mode . apheleia-mode))
+;; clang-format
+(use-package clang-format
+  :ensure t
+  :config
+  (defun my-format-before-save ()
+    (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
+  (add-hook 'c++-mode-hook  'my-format-before-save)
+  (add-hook 'c-mode-hook  'my-format-before-save)
+  (add-hook 'protobuf-mode 'my-format-before-save)
   )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; apheleia prettier
+(use-package apheleia
+  :ensure t
+  :hook ((markdown-mode . apheleia-mode))
+  :config
+  (with-eval-after-load 'markdown-mode
+    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go
 (use-package
   go-mode
+  :ensure t
   :config
   (defun lsp-go-install-save-hooks ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
@@ -169,40 +205,25 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; move-lang
-;; (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-;; (load "move-mode")
-;; (add-to-list 'auto-mode-alist '("\\.move\\'" . move-mode))
-;; (with-eval-after-load 'lsp-mode
-;;    (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
-;;    (lsp-register-client
-;;     (make-lsp-client
-;;      :new-connection (lsp-stdio-connection "move-analyzer")
-;;      :activation-fn (lsp-activate-on "move")
-;;      :priority -1
-;;      :server-id 'move-analyzer)))
-;; (add-hook 'move-mode-hook 'lsp)
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; protobuf
-(require 'protobuf-mode)
-(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
-(add-hook 'protobuf-mode-hook  'my-format-before-save)
+(use-package protobuf-mode
+  :ensure t
+  :mode ("\\.proto\\'" . protobuf-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Bazel
 (use-package
   bazel
-  :config (add-to-list 'auto-mode-alist '("\\BUILD\\'" . bazel-build-mode))
-  (add-to-list 'auto-mode-alist '("\\BUILD.bazel\\'" . bazel-build-mode))
-  (add-to-list 'auto-mode-alist '("\\WORKSPACE\\'" . bazel-workspace-mode))
-  (add-to-list 'auto-mode-alist '("\\WORKSPACE.bazel\\'" . bazel-workspace-mode))
-  (add-to-list 'auto-mode-alist '("\\.bzl\\'" . bazel-starlark-mode))
-  (add-to-list 'auto-mode-alist '("\\.bazelrc\\'" . bazelrc-mode))
-  (add-to-list 'auto-mode-alist '("\\.bazelignore\\'" . bazelignore-mode)))
+  :ensure t
+  :mode
+  ("\\BUILD\\'" . bazel-build-mode)
+  ("\\BUILD.bazel\\'" . bazel-build-mode)
+  ("\\WORKSPACE\\'" . bazel-workspace-mode)
+  ("\\WORKSPACE.bazel\\'" . bazel-workspace-mode)
+  ("\\.bzl\\'" . bazel-starlark-mode)
+  ("\\.bazelrc\\'" . bazelrc-mode)
+  ("\\.bazelignore\\'" . bazelignore-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Typescript
@@ -227,32 +248,44 @@
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append))
 
-(require 'js2-mode)
-(add-hook 'js2-mode-hook 'setup-tide-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(use-package js2-mode
+  :after (tide)
+  :ensure t
+  :mode "\\.js\\'"
+  :config
+  (add-hook 'js2-mode-hook 'setup-tide-mode))
 
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-hook 'web-mode-hook
+(use-package web-mode
+  :ensure t
+  :mode "\\.jsx\\'" "\\.tsx\\'"
+  :config
+  (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "jsx" (file-name-extension buffer-file-name))
               (setup-tide-mode))))
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
+  (add-hook 'web-mode-hook
           (lambda ()
             (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
+              (setup-tide-mode)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTex
 (require 'tex-site)
-;; local configuration for TeX modes
-(defun my-latex-mode-setup ()
+(use-package tex
+  :ensure auctex
+  :mode ("\\.ltx\\'" . LaTeX-mode)
+  :config
+  ;; local configuration for TeX modes
+  (defun my-latex-mode-setup ()
   (setq-local company-backends (append '((company-math-symbols-latex company-latex-commands))
-                       company-backends)))
-(add-to-list 'auto-mode-alist '("\\.ltx\\'" . LaTeX-mode))
-(add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
-(add-hook 'LaTex-mode-hook 'flyspell-mode)
+                                       company-backends)))
+  (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
+  (add-hook 'LaTex-mode-hook 'flyspell-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; rust
+(use-package rustic
+  :ensure t)
 
 ;;; init.el ends here
 

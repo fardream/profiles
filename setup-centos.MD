@@ -16,6 +16,7 @@ sudo dnf install clang clang-tools-extra llvm
 ## Golang
 
 Install g
+
 ```shell
 curl -sSL https://git.io/g-install | sh -s
 ```
