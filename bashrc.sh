@@ -79,3 +79,7 @@ export PATH=${HOME}/gobin${PATH:+":${PATH}"}
 source "$HOME/.cargo/env"
 
 export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
+
+export MSKHOME=${HOME}
+export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
+export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
