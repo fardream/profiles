@@ -80,6 +80,13 @@ source "$HOME/.cargo/env"
 
 export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
 
+# MOSEK
 export MSKHOME=${HOME}
 export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
+export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
 export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
+
+# texlive
+export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
+export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
+export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}
