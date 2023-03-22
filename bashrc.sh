@@ -85,6 +85,7 @@ export MSKHOME=${HOME}
 export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
 export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
 export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
+export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LIBRARY_PATH:+":$LIBRARY_PATH"}
 
 # texlive
 export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
