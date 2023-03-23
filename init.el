@@ -160,8 +160,6 @@
   ;; eldoc render all
   (setq lsp-eldoc-render-all t)
   :config
-  ;; (lsp-rust-analyzer-cargo-watch-command "clippy")
-  ;; (lsp-rust-analyzer-server-display-inlay-hints t)
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
   (lsp-register-custom-settings
    '(("gopls.completeUnimported" t t)
@@ -254,14 +252,13 @@
 (use-package
   go-mode
   :ensure t
+  :mode "\\.go\\'"
   :config
   (defun lsp-go-install-save-hooks ()
     (add-hook 'before-save-hook #'lsp-format-buffer t t)
     (add-hook 'before-save-hook #'lsp-organize-imports t t))
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-  (setq lsp-go-use-gofumpt t)
-  :init
-  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
+  (setq lsp-go-use-gofumpt t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; protobuf
@@ -343,7 +340,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; rust
 (use-package rustic
-  :ensure t)
+  :ensure t
+  :hook
+  (rustic-mode . lsp-rust-analyzer-inlay-hints-mode)
+  :init
+  (with-eval-after-load 'lsp-rust
+    (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+    (setq lsp-rust-analyzer-server-display-inlay-hints t))
+  :config
+  (setq rustic-format-trigger 'on-save))
 
 ;;; init.el ends here
-
