@@ -9,6 +9,7 @@
 
 ;; disable lockfiles
 (setq create-lockfiles nil)
+
 ;; Change the location of the saves
 (setq backup-directory-alist `(("." . "~/.saves")))
 
@@ -17,64 +18,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(apheleia-mode-alist
-   '((php-mode . phpcs)
-     (json-mode . prettier-json)
-     (json-ts-mode . prettier-json)
-     (bash-ts-mode . shfmt)
-     (beancount-mode . bean-format)
-     (c++-ts-mode . clang-format)
-     (caddyfile-mode . caddyfmt)
-     (cc-mode . clang-format)
-     (c-mode . clang-format)
-     (c-ts-mode . clang-format)
-     (c++-mode . clang-format)
-     (caml-mode . ocamlformat)
-     (common-lisp-mode . lisp-indent)
-     (crystal-mode . crystal-tool-format)
-     (css-mode . prettier-css)
-     (css-ts-mode . prettier-css)
-     (dart-mode . dart-format)
-     (elixir-mode . mix-format)
-     (elixir-ts-mode . mix-format)
-     (elm-mode . elm-format)
-     (fish-mode . fish-indent)
-     (go-mode . gofmt)
-     (go-mod-ts-mode . gofmt)
-     (go-ts-mode . gofmt)
-     (graphql-mode . prettier-graphql)
-     (haskell-mode . brittany)
-     (html-mode . prettier-html)
-     (java-mode . google-java-format)
-     (java-ts-mode . google-java-format)
-     (js3-mode . prettier-javascript)
-     (js-mode . prettier-javascript)
-     (js-ts-mode . prettier-javascript)
-     (kotlin-mode . ktlint)
-     (latex-mode . latexindent)
-     (LaTeX-mode . latexindent)
-     (lua-mode . stylua)
-     (lisp-mode . lisp-indent)
-     (nix-mode . nixfmt)
-     (python-mode . black)
-     (python-ts-mode . black)
-     (ruby-mode . prettier-ruby)
-     (ruby-ts-mode . prettier-ruby)
-     (rustic-mode . rustfmt)
-     (rust-mode . rustfmt)
-     (rust-ts-mode . rustfmt)
-     (scss-mode . prettier-scss)
-     (terraform-mode . terraform)
-     (TeX-latex-mode . latexindent)
-     (TeX-mode . latexindent)
-     (tsx-ts-mode . prettier-typescript)
-     (tuareg-mode . ocamlformat)
-     (typescript-mode . prettier-typescript)
-     (typescript-ts-mode . prettier-typescript)
-     (web-mode . prettier)
-     (yaml-mode . prettier-yaml)
-     (yaml-ts-mode . prettier-yaml)
-     (markdown-mode . prettier)))
  '(bazel-buildifier-before-save t)
  '(custom-safe-themes
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
@@ -111,7 +54,6 @@
     :ensure t
     :config
     (pinentry-start)))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
@@ -235,17 +177,17 @@
     (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
   (add-hook 'c++-mode-hook  'my-format-before-save)
   (add-hook 'c-mode-hook  'my-format-before-save)
-  (add-hook 'protobuf-mode 'my-format-before-save)
-  )
+  (add-hook 'protobuf-mode 'my-format-before-save))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; apheleia prettier
 (use-package apheleia
   :ensure t
-  :hook ((markdown-mode . apheleia-mode))
   :config
-  (with-eval-after-load 'markdown-mode
-    (add-to-list 'apheleia-mode-alist '(markdown-mode . prettier))))
+  (defun md-apheleia-mode()
+    (apheleia-mode)
+    (setf (alist-get 'markdown-mode apheleia-mode-alist) 'prettier))
+  (add-hook 'markdown-mode-hook #'md-apheleia-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go
@@ -292,7 +234,8 @@
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
-  (company-mode +1))
+  (company-mode +1)
+  (apheleia-mode +1))
 
 (use-package tide
   :ensure t
@@ -325,7 +268,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTex
-(require 'tex-site)
 (use-package tex
   :ensure auctex
   :mode ("\\.ltx\\'" . LaTeX-mode)
@@ -349,5 +291,10 @@
     (setq lsp-rust-analyzer-server-display-inlay-hints t))
   :config
   (setq rustic-format-trigger 'on-save))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; markdown
+(use-package markdown-mode
+  :ensure t)
 
 ;;; init.el ends here
