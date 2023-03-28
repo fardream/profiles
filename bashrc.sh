@@ -89,5 +89,5 @@ export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LIBRARY
 
 # texlive
 export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
-export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
-export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}
+# export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
+# export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}

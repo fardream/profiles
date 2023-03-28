@@ -172,6 +172,8 @@
 ;; clang-format
 (use-package clang-format
   :ensure t
+  :init
+  (setq clang-format-fallback-style "Google")
   :config
   (defun my-format-before-save ()
     (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
