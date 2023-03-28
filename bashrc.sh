@@ -42,7 +42,7 @@ alias e="emacs"
 export EDITOR=emacs
 
 function man() {
-	emacs -nw --eval "(progn (man \"$1\") (delete-window))"
+	emacs --user "" -nw --eval "(progn (man \"$1\") (delete-window))"
 }
 
 alias bazel=bazelisk
