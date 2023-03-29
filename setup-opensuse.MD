@@ -1,29 +1,40 @@
-# Setup Centos Stream 9
+# Setup OpenSuse
 
-## Some common stuff
+## Update to tumbleweed.
+
+`sudo bash`
 
 ```shell
-sudo dnf install -y epel-release
-sudo dnf upgrade -y
-sudo dnf install -y tmux git snapd
-sudo systemctl enable --now snapd.socket
-sudo ln -s /var/lib/snapd/snap /snap
-sudo snap install emacs --classic --edge
-sudo dnf install -y gcc-toolset-12 # check of latest gcc toolset version on https://pkgs.org/search/?q=gcc
-sudo dnf install -y clang clang-tools-extra llvm pinentry
-sudo dnf install -y liburing
+mkdir /etc/zypp/repos.d/old
+mv /etc/zypp/repos.d/*.repo /etc/zypp/repos.d/old
+
+zypper ar -f -c http://download.opensuse.org/tumbleweed/repo/oss repo-oss
+zypper ar -f -c http://download.opensuse.org/tumbleweed/repo/non-oss repo-non-oss
+zypper ar -f -c http://download.opensuse.org/tumbleweed/repo/debug repo-debug
+zypper ar -f -c http://download.opensuse.org/update/tumbleweed/ repo-update
+
+zypper cc -a && zypper ref && zypper dup --allow-vendor-change
 ```
 
-## Golang
-
-Install g
+```shell
+sudo zypper install -y gcc gcc-c++ tmux clang clang-tools
+```
 
 ```shell
-curl -sSL https://git.io/g-install | sh -s
+sudo zypper addrepo --refresh \
+    https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed \
+    snappy
+sudo zypper --gpg-auto-import-keys refresh
+sudo zypper dup --from snappy
+sudo zypper install snapd
+sudo systemctl enable --now snapd
+sudo systemctl enable --now snapd.apparmor
+sudo snap install emacs --classic --edge
+```
+
+```shell
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-nvm install 18
-npm install -g prettier
 ```
 
 ```shell
@@ -41,7 +52,6 @@ ln -s ~/github.com/fardream/profiles/init.el ~/.emacs.d/
 ln -s ~/github.com/fardream/profiles/tmux.conf ~/.tmux.conf
 ln -s ~/github.com/fardream/profiles/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 ln -s ~/github.com/fardream/profiles/bashrc.sh ~/.bashrc.d/
-ln -s ~/github.com/fardream/profiles/gitconfig ~/.gitconfig
 ```
 
 ```shell
