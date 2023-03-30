@@ -179,7 +179,7 @@
     (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
   (add-hook 'c++-mode-hook  'my-format-before-save)
   (add-hook 'c-mode-hook  'my-format-before-save)
-  (add-hook 'protobuf-mode 'my-format-before-save))
+  (add-hook 'protobuf-mode-hook 'my-format-before-save))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; apheleia prettier
