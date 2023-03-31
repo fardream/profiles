@@ -79,6 +79,7 @@ export PATH=${HOME}/gobin${PATH:+":${PATH}"}
 source "$HOME/.cargo/env"
 
 export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
+source /opt/intel/oneapi/setvars.sh
 
 # MOSEK
 export MSKHOME=${HOME}
