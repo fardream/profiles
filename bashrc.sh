@@ -1,5 +1,3 @@
-# .bashrc
-
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
@@ -61,34 +59,46 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+export PATH="${HOME}/mybin/bin":"${HOME}/mybin"${PATH:+":${PATH}"}
+
 # turn the below off.
 # After each command, append to the history file and reread it
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 # End of saving histories from different terminals
 
+# node.js
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="${HOME}/mybin/bin":"${HOME}/mybin":${PATH}
-
+# golang
 export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 export GOBIN=${HOME}/gobin
 export PATH=${HOME}/gobin${PATH:+":${PATH}"}
 
-source "$HOME/.cargo/env"
+# rust
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
 
-export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
-source /opt/intel/oneapi/setvars.sh
+# MKL
+if [ -f /opt/intel/oneapi/setvars.sh ] && [ -z "${SETVARS_COMPLETED}" ]; then
+    export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
+    source /opt/intel/oneapi/setvars.sh
+fi
 
 # MOSEK
-export MSKHOME=${HOME}
-export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
-export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
-export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
-export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LIBRARY_PATH:+":$LIBRARY_PATH"}
+if [ -d ${HOME}/mosek ]; then
+    export MSKHOME=${HOME}
+    export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
+    export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
+    export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
+    export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LIBRARY_PATH:+":$LIBRARY_PATH"}
+fi
 
 # texlive
-export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
-# export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
-# export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}
+if [ -d ${HOME}/texlive/2022 ]; then
+    export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
+    export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
+    export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}
+fi
