@@ -62,3 +62,19 @@ go install github.com/bazelbuild/bazel-gazelle/cmd/gazelle@latest
 go install golang.org/x/tools/cmd/godoc@latest
 go install golang.org/x/pkgsite/cmd/pkgsite@latest
 ```
+
+mkl
+
+```shell
+tee > /tmp/oneAPI.repo << EOF
+[oneAPI]
+name=Intel® oneAPI repository
+baseurl=https://yum.repos.intel.com/oneapi
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB
+EOF
+
+sudo mv /tmp/oneAPI.repo /etc/yum.repos.d/
+```
