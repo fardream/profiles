@@ -98,7 +98,7 @@ fi
 
 # texlive
 if [ -d ${HOME}/texlive/2022 ]; then
-    export PATH=${HOME}/texlive/2022/bin/x86_64-linux:${PATH}
-    export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man${MANPATH:+":$MANPATH"}
-    export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info${INFOPATH:+":$INFOPATH"}
+    export PATH=${HOME}/texlive/2022/bin/x86_64-linux${PATH:+":$PATH"}
+    export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man:${MANPATH}
+    export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info:${INFOPATH}
 fi
