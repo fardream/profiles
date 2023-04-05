@@ -10,7 +10,7 @@ sudo systemctl enable --now snapd.socket
 sudo ln -s /var/lib/snapd/snap /snap
 sudo snap install emacs --classic --edge
 sudo dnf install -y gcc-toolset-12 # check of latest gcc toolset version on https://pkgs.org/search/?q=gcc
-sudo dnf install -y clang clang-tools-extra llvm pinentry
+sudo dnf install -y clang clang-tools-extra llvm pinentry llvm-toolset llvm-devel
 sudo dnf install -y liburing
 ```
 
