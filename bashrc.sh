@@ -83,7 +83,7 @@ fi
 
 # MKL
 if [ -f /opt/intel/oneapi/setvars.sh ] && [ -z "${SETVARS_COMPLETED}" ]; then
-    export MKLROOT=/opt/intel/oneapi/mkl/2023.0.0
+    export MKLROOT=/opt/intel/oneapi/mkl/latest
     source /opt/intel/oneapi/setvars.sh
 fi
 
@@ -92,8 +92,8 @@ if [ -d ${HOME}/mosek ]; then
     export MSKHOME=${HOME}
     export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
     export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
-    export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LD_LIBRARY_PATH:+":$LD_LIBRARY_PATH"}
-    export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${LIBRARY_PATH:+":$LIBRARY_PATH"}
+    export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin:${LD_LIBRARY_PATH}
+    export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin:${LIBRARY_PATH}
 fi
 
 # texlive

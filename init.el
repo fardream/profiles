@@ -24,7 +24,7 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(json-mode yaml-mode apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks t)
@@ -185,6 +185,9 @@
 ;; apheleia prettier
 (use-package apheleia
   :ensure t
+  :hook
+  (json-mode . apheleia-mode)
+  (yaml-mode . apheleia-mode)
   :config
   (defun md-apheleia-mode()
     (apheleia-mode)
@@ -299,4 +302,15 @@
 (use-package markdown-mode
   :ensure t)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; json
+(use-package json-mode
+  :ensure t
+  :mode "\\.json\\'")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; yaml
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.yml")
 ;;; init.el ends here

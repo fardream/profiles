@@ -11,7 +11,7 @@ sudo ln -s /var/lib/snapd/snap /snap
 sudo snap install emacs --classic --edge
 sudo dnf install -y gcc-toolset-12 # check of latest gcc toolset version on https://pkgs.org/search/?q=gcc
 sudo dnf install -y clang clang-tools-extra llvm pinentry llvm-toolset llvm-devel
-sudo dnf install -y liburing
+sudo dnf install -y liburing bzip2 graphviz
 ```
 
 ## Golang
@@ -61,6 +61,7 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 go install github.com/bazelbuild/bazel-gazelle/cmd/gazelle@latest
 go install golang.org/x/tools/cmd/godoc@latest
 go install golang.org/x/pkgsite/cmd/pkgsite@latest
+go install github.com/google/pprof@latest
 ```
 
 mkl
@@ -77,4 +78,6 @@ gpgkey=https://yum.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.
 EOF
 
 sudo mv /tmp/oneAPI.repo /etc/yum.repos.d/
+
+sudo dnf install -y intel-oneapi-mkl intel-oneapi-mkl-devel
 ```
