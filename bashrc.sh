@@ -84,7 +84,7 @@ fi
 # MKL
 if [ -f /opt/intel/oneapi/setvars.sh ] && [ -z "${SETVARS_COMPLETED}" ]; then
     export MKLROOT=/opt/intel/oneapi/mkl/latest
-    source /opt/intel/oneapi/setvars.sh
+    source /opt/intel/oneapi/setvars.sh intel64
 fi
 
 # MOSEK

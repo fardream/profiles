@@ -79,5 +79,5 @@ EOF
 
 sudo mv /tmp/oneAPI.repo /etc/yum.repos.d/
 
-sudo dnf install -y intel-oneapi-mkl intel-oneapi-mkl-devel
+sudo dnf install -y intel-oneapi-mkl intel-oneapi-mkl-devel intel-oneapi-compiler-dpcpp-cpp intel-oneapi-openmp
 ```

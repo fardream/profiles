@@ -24,7 +24,7 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(json-mode yaml-mode apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(cython-mode json-mode yaml-mode apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks t)
@@ -112,6 +112,8 @@
          (c++-mode . lsp)
          ;; go
          (go-mode . lsp)
+         ;; python
+         (python-mode . lsp)
          ;; lsp
          (lsp-mode . lsp-enable-which-key-integration)))
 
@@ -313,4 +315,5 @@
 (use-package yaml-mode
   :ensure t
   :mode "\\.yml")
+
 ;;; init.el ends here
