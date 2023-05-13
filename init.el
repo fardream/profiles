@@ -116,6 +116,8 @@
          (python-mode . lsp)
          ;; rust
          (rustic-mode . lsp)
+         ;; R
+         (ess-r-mode . lsp)
          ;; lsp
          (lsp-mode . lsp-enable-which-key-integration)))
 
@@ -323,7 +325,7 @@
 (use-package ess-r-mode
   :ensure ess
   :mode "\\.R"
-  :config
+  :init
   (setq ess-use-flymake nil))
 
 ;;; init.el ends here
