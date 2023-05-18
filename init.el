@@ -24,7 +24,7 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(ess cython-mode json-mode yaml-mode apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme helm-xref which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
+   '(ess cython-mode json-mode yaml-mode apheleia auctex magit markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme which-key use-package helm eldoc ace-window company flycheck go-mode undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks t)
@@ -169,10 +169,6 @@
   (define-key global-map [remap find-file] #'helm-find-files)
   (define-key global-map [remap execute-extended-command] #'helm-M-x)
   (define-key global-map [remap switch-to-buffer] #'helm-mini))
-
-(use-package helm-xref
-  :after (helm)
-  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; clang-format
