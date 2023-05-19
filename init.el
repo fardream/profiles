@@ -1,6 +1,6 @@
 (require 'package)
 
-;; Add necessary
+;;; Code:
 (setq package-archives (list '("melpa" . "https://melpa.org/packages/")
                              '("gnu" . "https://elpa.gnu.org/packages/")
                              '("org" . "https://orgmode.org/elpa/")))
@@ -187,14 +187,17 @@
 ;; apheleia prettier
 (use-package apheleia
   :ensure t
+  :init
+  (defun md-apheleia-mode()
+    "Setup apheleia mode."
+    (interactive)
+    (apheleia-mode)
+    (setq apheleia-mode-alist (eval (car (get 'apheleia-mode-alist 'standard-value))))
+    (setf (alist-get 'markdown-mode apheleia-mode-alist) 'prettier))
+  (add-hook 'markdown-mode-hook 'md-apheleia-mode)
   :hook
   (json-mode . apheleia-mode)
-  (yaml-mode . apheleia-mode)
-  :config
-  (defun md-apheleia-mode()
-    (apheleia-mode)
-    (setf (alist-get 'markdown-mode apheleia-mode-alist) 'prettier))
-  (add-hook 'markdown-mode-hook #'md-apheleia-mode))
+  (yaml-mode . apheleia-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go
@@ -232,6 +235,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Typescript
 (defun setup-tide-mode ()
+  "Setup tide mode."
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
@@ -265,13 +269,13 @@
   :mode "\\.jsx\\'" "\\.tsx\\'"
   :config
   (add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "jsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
+            (lambda ()
+              (when (string-equal "jsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode))))
   (add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode)))))
+            (lambda ()
+              (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                (setup-tide-mode)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; LaTex
@@ -281,8 +285,8 @@
   :config
   ;; local configuration for TeX modes
   (defun my-latex-mode-setup ()
-  (setq-local company-backends (append '((company-math-symbols-latex company-latex-commands))
-                                       company-backends)))
+    (setq-local company-backends (append '((company-math-symbols-latex company-latex-commands))
+                                         company-backends)))
   (add-hook 'LaTeX-mode-hook 'my-latex-mode-setup)
   (add-hook 'LaTex-mode-hook 'flyspell-mode))
 
@@ -302,7 +306,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; markdown
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :mode ("\\.MD\\'" "\\.md\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; json
