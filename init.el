@@ -129,11 +129,11 @@
  ;; eldoc render all
  (setq lsp-eldoc-render-all t)
  (defun lsp-python-install-save-hooks ()
+   (setq lsp-pylsp-plugins-yapf-enabled t)
    (add-hook 'before-save-hook #'lsp-format-buffer t t))
  (add-hook 'python-mode-hook #'lsp-python-install-save-hooks)
  :config
  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
- (setq lsp-pylsp-plugins-yapf-enabled t)
  :hook
  ( ;; c
   (c-mode . lsp)
