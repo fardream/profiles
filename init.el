@@ -129,7 +129,7 @@
  ;; eldoc render all
  (setq lsp-eldoc-render-all t)
  (defun lsp-python-install-save-hooks ()
-   (setq lsp-pylsp-plugins-yapf-enabled t)
+   (setq lsp-pylsp-plugins-black-enabled t)
    (add-hook 'before-save-hook #'lsp-format-buffer t t))
  (add-hook 'python-mode-hook #'lsp-python-install-save-hooks)
  :config
@@ -351,7 +351,7 @@
 (use-package
  ess-r-mode
  :ensure ess
- :mode ("\\.R" "\\.r")
+ :mode ("\\.R\\'" "\\.r\\'")
  :init (setq ess-use-flymake nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
