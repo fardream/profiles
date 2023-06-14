@@ -27,7 +27,8 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(ess
+   '(elisp-autofmt
+     ess
      cython-mode
      json-mode
      yaml-mode
@@ -132,8 +133,7 @@
    (setq lsp-pylsp-plugins-black-enabled t)
    (add-hook 'before-save-hook #'lsp-format-buffer t t))
  (add-hook 'python-mode-hook #'lsp-python-install-save-hooks)
- :config
- (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+ :config (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
  :hook
  ( ;; c
   (c-mode . lsp)
