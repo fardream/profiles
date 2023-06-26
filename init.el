@@ -378,7 +378,8 @@
  :init
  (with-eval-after-load 'lsp-rust
    (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-   (setq lsp-rust-analyzer-server-display-inlay-hints t))
+   (setq lsp-rust-analyzer-server-display-inlay-hints t)
+   (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts nil))
  :config (setq rustic-format-trigger 'on-save))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
