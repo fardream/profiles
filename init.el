@@ -27,7 +27,10 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(consult
+   '(julia-repl
+     lsp-julia
+     julia-mode
+     consult
      vertico
      elisp-autofmt
      ess
@@ -206,6 +209,8 @@
   (rustic-mode . lsp)
   ;; R
   (ess-r-mode . lsp)
+  ;; julia
+  (julia-mode . lsp)
   ;; lsp
   (lsp-mode . lsp-enable-which-key-integration)))
 
@@ -401,6 +406,18 @@
  :ensure ess
  :mode ("\\.R\\'" "\\.r\\'")
  :init (setq ess-use-flymake nil))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; julia
+(use-package julia-mode :ensure t)
+
+(use-package lsp-julia :after (lsp-mode julia-mode))
+
+(use-package
+ julia-repl
+ :ensure t
+ :after julia-mode
+ :hook (julia-mode . julia-repl-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elisp
