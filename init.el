@@ -418,7 +418,7 @@
    (add-hook 'before-save-hook #'lsp-format-buffer t t))
  (add-hook 'lsp-mode-hook #'lsp-julia-install-save-hooks))
 
-(use-package lsp-julia :after (lsp-mode julia-mode))
+(use-package lsp-julia :ensure t :after (lsp-mode julia-mode))
 
 (use-package
  julia-repl
