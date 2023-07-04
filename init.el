@@ -409,7 +409,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; julia
-(use-package julia-mode :ensure t)
+(use-package
+ julia-mode
+ :ensure t
+ :after lsp-mode
+ :config
+ (defun lsp-julia-install-save-hooks ()
+   (add-hook 'before-save-hook #'lsp-format-buffer t t))
+ (add-hook 'lsp-mode-hook #'lsp-julia-install-save-hooks))
 
 (use-package lsp-julia :after (lsp-mode julia-mode))
 
