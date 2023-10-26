@@ -90,10 +90,10 @@ fi
 # MOSEK
 if [ -d ${HOME}/mosek ]; then
     export MSKHOME=${HOME}
-    export CPATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
-    export PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin${PATH:+":$PATH"}
-    export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin:${LD_LIBRARY_PATH}
-    export LIBRARY_PATH=${MSKHOME}/mosek/10.0/tools/platform/linux64x86/bin:${LIBRARY_PATH}
+    export CPATH=${MSKHOME}/mosek/10.1/tools/platform/linux64x86/h${CPATH:+":$CPATH"}
+    export PATH=${MSKHOME}/mosek/10.1/tools/platform/linux64x86/bin${PATH:+":$PATH"}
+    export LD_LIBRARY_PATH=${MSKHOME}/mosek/10.1/tools/platform/linux64x86/bin:${LD_LIBRARY_PATH}
+    export LIBRARY_PATH=${MSKHOME}/mosek/10.1/tools/platform/linux64x86/bin:${LIBRARY_PATH}
 fi
 
 # texlive
