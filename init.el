@@ -344,7 +344,7 @@
 (use-package
  rustic
  :ensure t
- :hook (rustic-mode . lsp-rust-analyzer-inlay-hints-mode)
+ :hook (rustic-mode . lsp-inlay-hints-mode)
  :init
  (with-eval-after-load 'lsp-rust
    (setq lsp-rust-analyzer-cargo-watch-command "clippy")
