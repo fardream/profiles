@@ -238,7 +238,10 @@
          (eval (car (get 'apheleia-mode-alist 'standard-value))))
    (setf (alist-get 'markdown-mode apheleia-mode-alist) 'prettier))
  (add-hook 'markdown-mode-hook 'md-apheleia-mode)
- :hook (json-mode . apheleia-mode) (yaml-mode . apheleia-mode))
+ :hook
+ (json-mode . apheleia-mode)
+ (yaml-mode . apheleia-mode)
+ (conf-toml-mode . apheleia-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Go
