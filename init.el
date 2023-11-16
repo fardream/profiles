@@ -230,14 +230,13 @@
  apheleia
  :ensure t
  :init
- (defun md-apheleia-mode ()
+ (defun prettier-apheleia-mode ()
    "Setup apheleia mode."
    (interactive)
    (apheleia-mode)
-   (setq apheleia-mode-alist
-         (eval (car (get 'apheleia-mode-alist 'standard-value))))
-   (setf (alist-get 'markdown-mode apheleia-mode-alist) 'prettier))
- (add-hook 'markdown-mode-hook 'md-apheleia-mode)
+   (setq apheleia-formatter 'prettier))
+ (add-hook 'markdown-mode-hook 'prettier-apheleia-mode)
+ (add-hook 'conf-toml-mode-hook 'prettier-apheleia-mode)
  :hook
  (json-mode . apheleia-mode)
  (yaml-mode . apheleia-mode)
