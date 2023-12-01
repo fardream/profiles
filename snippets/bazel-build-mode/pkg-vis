@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pkg-vis
+# key: vis
+# --
+package(default_visibility = ["//visibility:public"])
