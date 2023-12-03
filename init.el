@@ -22,11 +22,47 @@
  ;; If there is more than one, they won't work right.
  '(bazel-buildifier-before-save t)
  '(custom-safe-themes
-   '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f" default))
+   '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f"
+     default))
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(magit julia-repl lsp-julia julia-mode consult vertico elisp-autofmt ess cython-mode json-mode yaml-mode apheleia auctex markdown-mode js2-mode web-mode typescript-mode tide rustic pinentry bazel yasnippet clang-format protobuf-mode lsp-treemacs lsp-mode zenburn-theme which-key use-package eldoc ace-window company flycheck go-mode undo-tree))
+   '(smartparens
+     magit
+     julia-repl
+     lsp-julia
+     julia-mode
+     consult
+     vertico
+     elisp-autofmt
+     ess
+     cython-mode
+     json-mode
+     yaml-mode
+     apheleia
+     auctex
+     markdown-mode
+     js2-mode
+     web-mode
+     typescript-mode
+     tide
+     rustic
+     pinentry
+     bazel
+     yasnippet
+     clang-format
+     protobuf-mode
+     lsp-treemacs
+     lsp-mode
+     zenburn-theme
+     which-key
+     use-package
+     eldoc
+     ace-window
+     company
+     flycheck
+     go-mode
+     undo-tree))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks t)
@@ -135,12 +171,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; smartparens
-(use-package smartparens-mode
-  :ensure smartparens  ;; install the package
-  :hook (prog-mode text-mode markdown-mode go-mode rustic-mode js2-mode json-mode) ;; add `smartparens-mode` to these hooks
-  :config
-  ;; load default config
-  (require 'smartparens-config))
+(use-package
+ smartparens-mode
+ :ensure smartparens ;; install the package
+ :hook
+ (prog-mode
+  text-mode
+  markdown-mode
+  go-mode
+  rustic-mode
+  js2-mode
+  json-mode) ;; add `smartparens-mode` to these hooks
+ :config
+ ;; load default config
+ (require 'smartparens-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window
