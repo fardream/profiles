@@ -46,7 +46,7 @@
 (use-package vertico :ensure t :init (vertico-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; vertico
+;; consult
 (use-package
  consult
  :ensure t
@@ -133,6 +133,14 @@
  (setq undo-tree-history-directory-alist '(("." . "~/.saves")))
  (global-undo-tree-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; smartparens
+(use-package smartparens-mode
+  :ensure smartparens  ;; install the package
+  :hook (prog-mode text-mode markdown-mode go-mode rustic-mode js2-mode json-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window
