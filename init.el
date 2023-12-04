@@ -5,7 +5,8 @@
       (list
        '("melpa" . "https://melpa.org/packages/")
        '("gnu" . "https://elpa.gnu.org/packages/")
-       '("org" . "https://orgmode.org/elpa/")))
+       '("org" . "https://orgmode.org/elpa/")
+       '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
 
@@ -27,7 +28,8 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(smartparens
+   '(eat
+     smartparens
      magit
      julia-repl
      lsp-julia
@@ -176,11 +178,7 @@
  :ensure smartparens ;; install the package
  :hook
  (prog-mode
-  text-mode
-  markdown-mode
-  go-mode
-  rustic-mode
-  js2-mode
+  text-mode markdown-mode go-mode rustic-mode js2-mode
   json-mode) ;; add `smartparens-mode` to these hooks
  :config
  ;; load default config
@@ -448,5 +446,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; elisp
 (use-package elisp-autofmt :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eat
+(use-package eat :ensure t)
 
 ;;; init.el ends here

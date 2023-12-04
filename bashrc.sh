@@ -36,11 +36,15 @@ if [ -f /opt/rh/gcc-toolset-12/enable ]; then
     source /opt/rh/gcc-toolset-12/enable
 fi
 
-alias e="emacs"
-export EDITOR=emacs
+alias e='emacsclient -nw -a"" -c'
+export EDITOR='emacsclient -nw -a"" -c'
 
 function man() {
-	emacs --user "" -nw --eval "(progn (man \"$1\") (delete-window))"
+	emacsclient -nw -a "" -c --eval "(progn (man \"$1\") (delete-window))"
+}
+
+function emacsdown() {
+    emacsclient -nw -a "" -c --eval "(server-stop)"
 }
 
 alias bazel=bazelisk
