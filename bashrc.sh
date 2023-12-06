@@ -86,10 +86,10 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 # MKL
-if [ -f /opt/intel/oneapi/setvars.sh ] && [ -z "${SETVARS_COMPLETED}" ]; then
-    export MKLROOT=/opt/intel/oneapi/mkl/latest
-    source /opt/intel/oneapi/setvars.sh intel64
-fi
+# if [ -f /opt/intel/oneapi/setvars.sh ] && [ -z "${SETVARS_COMPLETED}" ]; then
+#     export MKLROOT=/opt/intel/oneapi/mkl/latest
+#     source /opt/intel/oneapi/setvars.sh intel64
+# fi
 
 # MOSEK
 if [ -d ${HOME}/mosek ]; then
