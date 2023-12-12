@@ -1,3 +1,6 @@
+;;; package --- Summary
+;;; Commentary:
+;;; personal init
 (require 'package)
 
 ;;; Code:
@@ -28,7 +31,8 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(dockerfile-mode
+   '(magit-section
+     dockerfile-mode
      eat
      smartparens
      magit
@@ -400,9 +404,9 @@
  :hook (rustic-mode . lsp-inlay-hints-mode)
  :init
  (with-eval-after-load 'lsp-rust
-   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+   (setq lsp-rust-analyzer-cargo-watch-enable nil)
    (setq lsp-rust-analyzer-server-display-inlay-hints t)
-   (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts nil))
+   (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t))
  :config (setq rustic-format-trigger 'on-save))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -450,7 +454,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eat
-(use-package eat :ensure t)
+(use-package
+ eat
+ :ensure t
+ :config (add-to-list 'eat-semi-char-non-bound-keys '[M-o]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dockerfile-mode
