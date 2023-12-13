@@ -31,8 +31,7 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(magit-section
-     dockerfile-mode
+   '(dockerfile-mode
      eat
      smartparens
      magit
