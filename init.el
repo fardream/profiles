@@ -24,7 +24,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(bazel-buildifier-before-save t)
  '(custom-safe-themes
    '("2dc03dfb67fbcb7d9c487522c29b7582da20766c9998aaad5e5b63b5c27eec3f"
      default))
@@ -321,6 +320,7 @@
 (use-package
  bazel
  :ensure t
+ :custom (bazel-buildifier-before-save t)
  :mode
  ("\\BUILD\\'" . bazel-build-mode)
  ("\\BUILD.bazel\\'" . bazel-build-mode)
@@ -403,7 +403,7 @@
  :hook (rustic-mode . lsp-inlay-hints-mode)
  :init
  (with-eval-after-load 'lsp-rust
-   (setq lsp-rust-analyzer-cargo-watch-enable nil)
+   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
    (setq lsp-rust-analyzer-server-display-inlay-hints t)
    (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t))
  :config (setq rustic-format-trigger 'on-save))
