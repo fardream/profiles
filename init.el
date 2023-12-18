@@ -79,6 +79,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+;; below is from magit warning
+(setq package-install-upgrade-built-in t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; all the interfacing stuff that has nothing to do with programming languages
 
@@ -321,6 +324,9 @@
  bazel
  :ensure t
  :custom (bazel-buildifier-before-save t)
+ :config
+ (if (file-exists-p "~/bin/buildifier-with-lint")
+     (setq bazel-buildifier-command "buildifier-with-lint"))
  :mode
  ("\\BUILD\\'" . bazel-build-mode)
  ("\\BUILD.bazel\\'" . bazel-build-mode)
