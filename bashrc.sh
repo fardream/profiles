@@ -106,3 +106,24 @@ if [ -d ${HOME}/texlive/2022 ]; then
     export MANPATH=${HOME}/texlive/2022/texmf-dist/doc/man:${MANPATH}
     export INFOPATH=${HOME}/texlive/2022/texmf-dist/doc/info:${INFOPATH}
 fi
+
+function deduppath() {
+    if [ -n "$PATH" ]; then
+        old_PATH=$PATH:; PATH=
+        while [ -n "$old_PATH" ]; do
+            x=${old_PATH%%:*}       # the first remaining entry
+            case $PATH: in
+                *:"$x":*) ;;          # already there
+                *) PATH=$PATH:$x;;    # not there yet
+            esac
+            old_PATH=${old_PATH#*:}
+        done
+        PATH=${PATH#:}
+        unset old_PATH x
+        export PATH
+    fi
+}
+
+export PATH="${HOME}/.local/bin:${HOME}/bin:$PATH"
+
+deduppath
