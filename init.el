@@ -32,7 +32,6 @@
  '(package-selected-packages
    '(dockerfile-mode
      eat
-     smartparens
      magit
      julia-repl
      lsp-julia
@@ -176,19 +175,6 @@
  :config
  (setq undo-tree-history-directory-alist '(("." . "~/.saves")))
  (global-undo-tree-mode))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; smartparens
-(use-package
- smartparens-mode
- :ensure smartparens ;; install the package
- :hook
- (prog-mode
-  text-mode markdown-mode go-mode rustic-mode js2-mode
-  json-mode) ;; add `smartparens-mode` to these hooks
- :config
- ;; load default config
- (require 'smartparens-config))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ace-window
