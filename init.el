@@ -30,7 +30,8 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(dockerfile-mode
+   '(lua-mode
+     dockerfile-mode
      eat
      magit
      julia-repl
@@ -454,5 +455,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; dockerfile-mode
 (use-package dockerfile-mode :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lua-mode
+(use-package lua-mode :ensure t :mode ("\\.lua\\'"))
 
 ;;; init.el ends here
