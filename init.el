@@ -8,7 +8,6 @@
       (list
        '("melpa" . "https://melpa.org/packages/")
        '("gnu" . "https://elpa.gnu.org/packages/")
-       '("org" . "https://orgmode.org/elpa/")
        '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (package-initialize)
@@ -314,8 +313,8 @@
 (use-package
  bazel
  :ensure t
- :vc (:url "https://github.com/phst/emacs-bazel-mode/"
-      :rev "54ebc9c")
+ :vc (:url "https://github.com/phst/emacs-bazel-mode.git"
+      :rev "769b30d")
  :custom (bazel-buildifier-before-save t)
  :config
  (if (file-exists-p "~/bin/buildifier-with-lint")
