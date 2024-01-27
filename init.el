@@ -312,8 +312,7 @@
 ;; Bazel
 (use-package
  bazel
- :load-path "github.com/phst/emacs-bazel-mode"
- :ensure t
+ :load-path "~/github.com/phst/emacs-bazel-mode"
  :custom (bazel-buildifier-before-save t)
  :config
  (if (file-exists-p "~/bin/buildifier-with-lint")
@@ -321,6 +320,7 @@
  :mode
  ("\\BUILD\\'" . bazel-build-mode)
  ("\\BUILD.bazel\\'" . bazel-build-mode)
+ ("\\MODULE.bazel\\'" . bazel-module-mode)
  ("\\WORKSPACE\\'" . bazel-workspace-mode)
  ("\\WORKSPACE.bazel\\'" . bazel-workspace-mode)
  ("\\.bzl\\'" . bazel-starlark-mode)
