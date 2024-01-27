@@ -312,9 +312,8 @@
 ;; Bazel
 (use-package
  bazel
+ :load-path "github.com/phst/emacs-bazel-mode"
  :ensure t
- :vc (:url "https://github.com/phst/emacs-bazel-mode.git"
-      :rev "769b30d")
  :custom (bazel-buildifier-before-save t)
  :config
  (if (file-exists-p "~/bin/buildifier-with-lint")
