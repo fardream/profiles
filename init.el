@@ -30,44 +30,47 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   '(lua-mode
-     dockerfile-mode
-     eat
-     magit
-     julia-repl
-     lsp-julia
-     julia-mode
-     consult
-     vertico
-     elisp-autofmt
-     ess
-     cython-mode
-     json-mode
-     yaml-mode
+   '(ace-window
      apheleia
      auctex
-     markdown-mode
-     js2-mode
-     web-mode
-     typescript-mode
-     tide
-     rustic
-     pinentry
      bazel
-     yasnippet
+     bind-key
      clang-format
-     protobuf-mode
-     lsp-treemacs
-     lsp-mode
-     zenburn-theme
-     which-key
-     use-package
-     eldoc
-     ace-window
      company
+     consult
+     cython-mode
+     dockerfile-mode
+     eat
+     eldoc
+     elisp-autofmt
+     ess
+     faceup
      flycheck
      go-mode
-     undo-tree))
+     js2-mode
+     json-mode
+     julia-mode
+     julia-repl
+     lsp-julia
+     lsp-mode
+     lsp-treemacs
+     lua-mode
+     magit
+     markdown-mode
+     org
+     pinentry
+     protobuf-mode
+     rustic
+     tide
+     typescript-mode
+     undo-tree
+     use-package
+     vertico
+     web-mode
+     which-key
+     yaml-mode
+     yasnippet
+     zenburn-theme))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks t)
@@ -311,6 +314,8 @@
 (use-package
  bazel
  :ensure t
+ :vc (:url "https://github.com/phst/emacs-bazel-mode/"
+      :rev "54ebc9c")
  :custom (bazel-buildifier-before-save t)
  :config
  (if (file-exists-p "~/bin/buildifier-with-lint")
