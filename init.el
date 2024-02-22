@@ -205,7 +205,12 @@
    (setq lsp-pylsp-plugins-black-enabled t)
    (add-hook 'before-save-hook #'lsp-format-buffer t t))
  (add-hook 'python-mode-hook #'lsp-python-install-save-hooks)
- :config (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+ :config
+ (dolist (e
+          '("[/\\\\]build\\'"
+            "[/\\\\]external\\'"
+            "[/\\\\]bazel-.*\\'"))
+   (add-to-list 'lsp-file-watch-ignored-directories e))
  :hook
  ( ;; c
   (c-mode . lsp)
@@ -298,8 +303,7 @@
    (add-hook 'before-save-hook #'lsp-format-buffer t t)
    (add-hook 'before-save-hook #'lsp-organize-imports t t))
  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
- :custom
- (lsp-go-use-gofumpt t))
+ :custom (lsp-go-use-gofumpt t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; protobuf
