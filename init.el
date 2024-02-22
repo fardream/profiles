@@ -216,8 +216,6 @@
   (c-mode . lsp)
   ;; c++
   (c++-mode . lsp)
-  ;; go
-  (go-mode . lsp)
   ;; python
   (python-mode . lsp)
   ;; rust
@@ -299,10 +297,10 @@
  :ensure t
  :mode "\\.go\\'"
  :config
- (defun lsp-go-install-save-hooks ()
+ (defun go-hooks ()
    (add-hook 'before-save-hook #'lsp-format-buffer t t)
    (add-hook 'before-save-hook #'lsp-organize-imports t t))
- (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+ (add-hook 'go-mode-hook #'go-hooks)
  :custom (lsp-go-use-gofumpt t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -467,4 +465,14 @@
 ;; lua-mode
 (use-package lua-mode :ensure t :mode ("\\.lua\\'"))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; make some variables safe
+(put 'lsp-go-env 'safe-local-variable #'listp)
+(put 'lsp-go-goimports-local 'safe-local-variable #'stringp)
+
+(add-hook
+ 'hack-local-variables-hook
+ (lambda ()
+   (when (derived-mode-p 'go-mode)
+     (lsp))))
 ;;; init.el ends here
