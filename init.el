@@ -469,6 +469,9 @@
 ;; make some variables safe
 (put 'lsp-go-env 'safe-local-variable #'listp)
 (put 'lsp-go-goimports-local 'safe-local-variable #'stringp)
+(put 'lsp-go-directory-filters 'safe-local-variable #'listp)
+(put 'lsp-go-codelenses 'safe-local-variable #'listp)
+(put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 
 (add-hook
  'hack-local-variables-hook
