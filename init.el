@@ -64,6 +64,7 @@
      typescript-mode
      undo-tree
      use-package
+     verilog-mode
      vertico
      web-mode
      which-key
@@ -218,8 +219,8 @@
   (c++-mode . lsp)
   ;; python
   (python-mode . lsp)
-  ;; rust
-  (rustic-mode . lsp)
+  ;; rust turn this off
+  ;; (rustic-mode . lsp)
   ;; R
   (ess-r-mode . lsp)
   ;; julia
@@ -399,12 +400,12 @@
 (use-package
  rustic
  :ensure t
- :hook (rustic-mode . lsp-inlay-hints-mode)
+ ;; :hook (rustic-mode . lsp-inlay-hints-mode)
  :init
- (with-eval-after-load 'lsp-rust
-   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-   (setq lsp-rust-analyzer-server-display-inlay-hints t)
-   (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t))
+ ;; (with-eval-after-load 'lsp-rust
+ ;;   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+ ;;   (setq lsp-rust-analyzer-server-display-inlay-hints t)
+ ;;   (setq lsp-rust-analyzer-use-rustc-wrapper-for-build-scripts t))
  :config (setq rustic-format-trigger 'on-save))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
