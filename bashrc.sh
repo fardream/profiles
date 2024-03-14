@@ -32,9 +32,9 @@ export PS1="$yellow[$CYAN\u$yellow@$red\H$yellow $GREEN\W$grey$yellow]$NC\$ "
 
 export GPG_TTY=$(tty)
 
-if [ -f /opt/rh/gcc-toolset-12/enable ]; then
-    source /opt/rh/gcc-toolset-12/enable
-fi
+# if [ -f /opt/rh/gcc-toolset-12/enable ]; then
+#     source /opt/rh/gcc-toolset-12/enable
+# fi
 
 alias e='emacsclient -nw -a "" -c'
 export EDITOR='emacsclient -nw -a "" -c'
