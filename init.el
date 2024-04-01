@@ -60,6 +60,7 @@
      pinentry
      protobuf-mode
      rustic
+     sqlformat
      tide
      typescript-mode
      undo-tree
@@ -467,6 +468,14 @@
 (use-package lua-mode :ensure t :mode ("\\.lua\\'"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; auto format sql
+(use-package
+ sqlformat
+ :ensure t
+ :hook (sql-mode . sqlformat-on-save-mode)
+ :config (setq sqlformat-command 'sqlfmt))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; make some variables safe
 (put 'lsp-go-env 'safe-local-variable #'listp)
 (put 'lsp-go-goimports-local 'safe-local-variable #'stringp)
@@ -474,6 +483,7 @@
 (put 'lsp-go-codelenses 'safe-local-variable #'listp)
 (put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 (put 'flycheck-protoc-import-path 'safe-local-variable #'listp)
+(put 'sqlformat-command 'safe-local-variable #'stringp)
 
 (add-hook
  'hack-local-variables-hook
