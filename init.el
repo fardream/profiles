@@ -483,7 +483,8 @@
 (put 'lsp-go-codelenses 'safe-local-variable #'listp)
 (put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 (put 'flycheck-protoc-import-path 'safe-local-variable #'listp)
-(put 'sqlformat-command 'safe-local-variable #'objectp)
+(put 'sqlformat-command 'safe-local-variable (lambda (_) t))
+(put 'sqlformat-args 'safe-local-variable #'listp)
 
 (add-hook
  'hack-local-variables-hook
