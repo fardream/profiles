@@ -79,6 +79,7 @@ export NVM_DIR="$HOME/.nvm"
 export GOPATH="$HOME/go"; export GOROOT="$HOME/.go"; export PATH="$GOPATH/bin:$PATH"; # g-install: do NOT edit, see https://github.com/stefanmaric/g
 export GOBIN=${HOME}/gobin
 export PATH=${HOME}/gobin${PATH:+":${PATH}"}
+export GOFUMPT_SPLIT_LONG_LINES=on
 
 # rust
 if [ -f "$HOME/.cargo/env" ]; then

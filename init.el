@@ -74,7 +74,7 @@
      zenburn-theme))
  '(split-height-threshold 200)
  '(tab-width 4)
- '(vc-follow-symlinks t)
+ '(vc-follow-symlinks nil)
  '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -211,7 +211,8 @@
  (dolist (e
           '("[/\\\\]build\\'"
             "[/\\\\]external\\'"
-            "[/\\\\]bazel-.*\\'"))
+            "[/\\\\]bazel-.*\\'"
+            "[/\\\\].repo\\'"))
    (add-to-list 'lsp-file-watch-ignored-directories e))
  :hook
  ( ;; c
@@ -479,7 +480,7 @@
 ;; make some variables safe
 (put 'lsp-go-env 'safe-local-variable #'listp)
 (put 'lsp-go-goimports-local 'safe-local-variable #'stringp)
-(put 'lsp-go-directory-filters 'safe-local-variable #'listp)
+(put 'lsp-go-directory-filters 'safe-local-variable #'vectorp)
 (put 'lsp-go-codelenses 'safe-local-variable #'listp)
 (put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 (put 'flycheck-protoc-import-path 'safe-local-variable #'listp)
