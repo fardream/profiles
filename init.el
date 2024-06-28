@@ -291,6 +291,7 @@
  :hook
  (json-mode . apheleia-mode)
  (yaml-mode . apheleia-mode)
+ (web-mode . apheleia-mode)
  (conf-toml-mode . apheleia-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -369,7 +370,7 @@
 (use-package
  web-mode
  :ensure t
- :mode "\\.jsx\\'" "\\.tsx\\'"
+ :mode "\\.jsx\\'" "\\.tsx\\'" "\\.html\\'"
  :config
  (add-hook
   'web-mode-hook
