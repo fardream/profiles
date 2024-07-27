@@ -37,6 +37,7 @@
      clang-format
      company
      consult
+     consult-lsp
      cython-mode
      dockerfile-mode
      eat
@@ -61,6 +62,7 @@
      protobuf-mode
      rustic
      sqlformat
+     sqlup-mode
      tide
      typescript-mode
      undo-tree
@@ -229,6 +231,11 @@
   (julia-mode . lsp)
   ;; lsp
   (lsp-mode . lsp-enable-which-key-integration)))
+
+(use-package
+  consult-lsp
+  :ensure t
+  :after (lsp consult))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; whichkey
@@ -476,6 +483,11 @@
  :ensure t
  :hook (sql-mode . sqlformat-on-save-mode)
  :config (setq sqlformat-command 'sqlfmt))
+
+(use-package
+  sqlup-mode
+  :ensure t
+  :hook (sql-mode . sqlup-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; make some variables safe
