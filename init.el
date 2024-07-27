@@ -28,6 +28,7 @@
      default))
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
+ '(native-comp-async-report-warnings-errors 'silent)
  '(package-selected-packages
    '(ace-window
      apheleia
