@@ -3,6 +3,7 @@
 ## Some common stuff
 
 ```shell
+sudo dnf config-manager --set-enabled crb
 sudo dnf install -y epel-release
 sudo dnf upgrade -y
 sudo dnf install -y tmux git snapd
