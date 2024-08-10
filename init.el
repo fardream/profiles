@@ -164,7 +164,34 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; zenburn
-(use-package zenburn-theme :ensure t :config (load-theme 'zenburn t))
+(use-package
+ zenburn-theme
+ :ensure t
+ :config (load-theme 'zenburn t)
+ (custom-theme-set-faces 'zenburn
+                         '(highlight
+                           ((t (:background "brightblack"))))
+                         '(error
+                           ((t
+                             (:background
+                              "brightblack"
+                              :foreground "red"
+                              :weight bold))))
+                         '(shadow
+                           ((t
+                             (:background
+                              "brightblack"
+                              :foreground "grey70"))))
+                         '(lazy-highlight
+                           ((t
+                             (:background
+                              "brightblack"
+                              :foreground "#D0BF8F"))))
+                         '(lsp-flycheck-error-unnecessary
+                           ((t
+                             (:background
+                              "brightblack"
+                              :foreground "#CC9393"))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; global auto revert
@@ -233,10 +260,7 @@
   ;; lsp
   (lsp-mode . lsp-enable-which-key-integration)))
 
-(use-package
-  consult-lsp
-  :ensure t
-  :after (lsp consult))
+(use-package consult-lsp :ensure t :after (lsp consult))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; whichkey
@@ -485,10 +509,7 @@
  :hook (sql-mode . sqlformat-on-save-mode)
  :config (setq sqlformat-command 'sqlfmt))
 
-(use-package
-  sqlup-mode
-  :ensure t
-  :hook (sql-mode . sqlup-mode))
+(use-package sqlup-mode :ensure t :hook (sql-mode . sqlup-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; make some variables safe
