@@ -320,6 +320,8 @@
    (setq apheleia-formatter 'prettier))
  (add-hook 'markdown-mode-hook 'prettier-apheleia-mode)
  (add-hook 'conf-toml-mode-hook 'prettier-apheleia-mode)
+ :config
+ (setq apheleia-formatters-respect-indent-level nil)
  :hook
  (json-mode . apheleia-mode)
  (yaml-mode . apheleia-mode)
