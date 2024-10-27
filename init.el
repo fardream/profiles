@@ -29,52 +29,7 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(native-comp-async-report-warnings-errors 'silent)
- '(package-selected-packages
-   '(ace-window
-     apheleia
-     auctex
-     bazel
-     bind-key
-     clang-format
-     company
-     consult
-     consult-lsp
-     cython-mode
-     dockerfile-mode
-     eat
-     eldoc
-     elisp-autofmt
-     ess
-     faceup
-     flycheck
-     go-mode
-     js2-mode
-     json-mode
-     julia-mode
-     julia-repl
-     lsp-julia
-     lsp-mode
-     lsp-treemacs
-     lua-mode
-     magit
-     markdown-mode
-     org
-     pinentry
-     protobuf-mode
-     rustic
-     sqlformat
-     sqlup-mode
-     tide
-     typescript-mode
-     undo-tree
-     use-package
-     verilog-mode
-     vertico
-     web-mode
-     which-key
-     yaml-mode
-     yasnippet
-     zenburn-theme))
+ '(package-selected-packages nil)
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks nil)
@@ -153,6 +108,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
 (use-package magit :ensure t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; repo
+(use-package repo :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GPG
@@ -320,8 +278,7 @@
    (setq apheleia-formatter 'prettier))
  (add-hook 'markdown-mode-hook 'prettier-apheleia-mode)
  (add-hook 'conf-toml-mode-hook 'prettier-apheleia-mode)
- :config
- (setq apheleia-formatters-respect-indent-level nil)
+ :config (setq apheleia-formatters-respect-indent-level nil)
  :hook
  (json-mode . apheleia-mode)
  (yaml-mode . apheleia-mode)
