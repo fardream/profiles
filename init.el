@@ -474,6 +474,7 @@
 (put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 (put 'flycheck-protoc-import-path 'safe-local-variable #'listp)
 (put 'sqlformat-command 'safe-local-variable (lambda (_) t))
+(put 'lsp-file-watch-ignored-directories 'safe-local-variable (lambda (_) t))
 (put 'sqlformat-args 'safe-local-variable #'listp)
 
 (add-hook
