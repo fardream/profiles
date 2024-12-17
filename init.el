@@ -144,12 +144,7 @@
                            ((t
                              (:background
                               "brightblack"
-                              :foreground "#D0BF8F"))))
-                         '(lsp-flycheck-error-unnecessary
-                           ((t
-                             (:background
-                              "brightblack"
-                              :foreground "#CC9393"))))))
+                              :foreground "#D0BF8F"))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; global auto revert
