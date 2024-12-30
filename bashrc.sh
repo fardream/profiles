@@ -92,6 +92,11 @@ fi
 #     source /opt/intel/oneapi/setvars.sh intel64
 # fi
 
+if [ -d /usr/local/cuda ]; then
+    export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
+    export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+fi
+
 # MOSEK
 if [ -d ${HOME}/mosek/10.1/tools/platform/linux64x864 ]; then
     export MSKHOME=${HOME}
