@@ -181,7 +181,7 @@
  :ensure t
  :init
  ;; disable the headerline
- (setq lsp-headerline-breadcrumb-enable nil)
+ ;; (setq lsp-headerline-breadcrumb-enable nil)
  ;; remap the keys
  (setq lsp-keymap-prefix "C-c l")
  ;; eldoc render all
@@ -195,7 +195,10 @@
           '("[/\\\\]build\\'"
             "[/\\\\]external\\'"
             "[/\\\\]bazel-.*\\'"
-            "[/\\\\].repo\\'"))
+            "[/\\\\].repo\\'"
+            "[/\\\\]experimental\\'"
+            "src\\'"
+            "[/\\\\]tmp\\'"))
    (add-to-list 'lsp-file-watch-ignored-directories e))
  :hook
  ( ;; c
@@ -321,9 +324,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CUDA
-(use-package
-  cuda-mode
-  :ensure t)
+(use-package cuda-mode :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Typescript
@@ -480,7 +481,10 @@
 (put 'lsp-go-gopls-server-args 'safe-local-variable #'listp)
 (put 'flycheck-protoc-import-path 'safe-local-variable #'listp)
 (put 'sqlformat-command 'safe-local-variable (lambda (_) t))
-(put 'lsp-file-watch-ignored-directories 'safe-local-variable (lambda (_) t))
+(put
+ 'lsp-file-watch-ignored-directories
+ 'safe-local-variable
+ (lambda (_) t))
 (put 'sqlformat-args 'safe-local-variable #'listp)
 
 (add-hook
