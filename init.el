@@ -29,7 +29,51 @@
  '(indent-tabs-mode nil)
  '(menu-bar-mode nil)
  '(native-comp-async-report-warnings-errors 'silent)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(ace-window
+     apheleia
+     auctex
+     clang-format
+     company
+     compat
+     consult-lsp
+     cuda-mode
+     dockerfile-mode
+     eat
+     editorconfig
+     eglot
+     eldoc
+     elisp-autofmt
+     ess
+     faceup
+     flymake
+     go-mode
+     idlwave
+     js2-mode
+     json-mode
+     julia-repl
+     lsp-julia
+     lua-mode
+     magit
+     org
+     protobuf-mode
+     python
+     repo
+     rustic
+     sqlformat
+     sqlup-mode
+     tide
+     track-changes
+     tramp
+     undo-tree
+     verilog-mode
+     vertico
+     web-mode
+     which-key
+     window-tool-bar
+     yaml-mode
+     yasnippet
+     zenburn-theme))
  '(split-height-threshold 200)
  '(tab-width 4)
  '(vc-follow-symlinks nil)
@@ -107,7 +151,10 @@
  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; magit
-(use-package magit :ensure t)
+(use-package
+ magit
+ :ensure t
+ :config (setq magit-diff-visit-prefer-worktree t))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; repo
 (use-package repo :ensure t)
