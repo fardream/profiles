@@ -35,20 +35,15 @@
      auctex
      clang-format
      company
-     compat
      consult-lsp
      cuda-mode
      dockerfile-mode
      eat
-     editorconfig
-     eglot
      eldoc
      elisp-autofmt
      ess
-     faceup
      flymake
      go-mode
-     idlwave
      js2-mode
      json-mode
      julia-repl
@@ -63,14 +58,11 @@
      sqlformat
      sqlup-mode
      tide
-     track-changes
-     tramp
      undo-tree
      verilog-mode
      vertico
      web-mode
      which-key
-     window-tool-bar
      yaml-mode
      yasnippet
      zenburn-theme))
