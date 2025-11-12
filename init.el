@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary -*- lexical-binding: nil; -*-
 ;;; Commentary:
 ;;; personal init
 (require 'package)
