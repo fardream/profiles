@@ -346,7 +346,6 @@
 ;; Bazel
 (use-package
  bazel
- :load-path "~/github.com/phst/emacs-bazel-mode"
  :custom (bazel-buildifier-before-save t)
  :config
  (if (file-exists-p "~/bin/buildifier-with-lint")
